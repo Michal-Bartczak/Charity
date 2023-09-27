@@ -8,12 +8,7 @@ import javax.persistence.*;
 @Entity
 @Setter
 @Getter
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(unique = true)
-    private String email;
-    private String password;
+@Table(name = "users")
+public class User extends BaseUser{
+    private String role = "USER";
 }

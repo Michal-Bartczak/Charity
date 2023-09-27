@@ -1,5 +1,6 @@
 package pl.coderslab.charity.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.model.RegistrationForm;
@@ -9,6 +10,8 @@ import pl.coderslab.charity.repository.UserRepository;
 public class UserService {
     private final UserRepository userRepository;
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -17,6 +20,7 @@ public class UserService {
         return registrationForm.getPassword().equals(registrationForm.getConfirmPassword());
     }
     public void saveUser(User user){
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
