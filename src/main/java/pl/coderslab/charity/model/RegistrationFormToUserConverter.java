@@ -11,6 +11,7 @@ public class RegistrationFormToUserConverter implements Converter<RegistrationFo
     @Override
     public User convert(RegistrationForm registrationForm) {
         User user = new User();
+        user.setUsername(registrationForm.getUsername());
         user.setEmail(registrationForm.getEmail());
         user.setPassword(registrationForm.getPassword());
         return user;

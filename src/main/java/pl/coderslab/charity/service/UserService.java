@@ -1,5 +1,7 @@
 package pl.coderslab.charity.service;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.entity.User;
@@ -10,10 +12,11 @@ import pl.coderslab.charity.repository.UserRepository;
 public class UserService {
     private final UserRepository userRepository;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public boolean checkConfirmPassword(RegistrationForm registrationForm){
@@ -24,8 +27,18 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public boolean isEmailAlreadyInUse(User user) {
-        User existingUser = userRepository.findByEmail(user.getEmail());
-        return existingUser == null;
+    public boolean isUsernameAlreadyInUse(User user) {
+        User existingUser = userRepository.findByUsername(user.getUsername());
+        return existingUser != null;
+    }
+
+    public String getCurrentUsernameForCustomer() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        } else {
+            return principal.toString();
+        }
     }
 }

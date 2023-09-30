@@ -124,20 +124,43 @@ document.addEventListener("DOMContentLoaded", function() {
     const radioButtons = document.querySelectorAll('input[type="radio"]');
     const selectedOrganizationName = document.getElementById("inputOrganization");
     const quantityBegs = document.getElementById("quantityBegs");
-
+    const bagsForm = document.getElementById("count-bags");
+    const checkboxes = document.querySelectorAll('input[name="categories"]');
 
     function updateSelectedOrganization() {
         const checkedRadioButton = document.querySelector('input[type="radio"]:checked');
         if (checkedRadioButton) {
-            const organizationName = checkedRadioButton.parentElement.querySelector(".title").textContent.trim();
+            const organizationName = checkedRadioButton.parentElement.querySelector(".title").innerText.trim();
             selectedOrganizationName.textContent = `Dla fundacji ${organizationName}`;
         }
     }
 
-    const bagsForm = document.getElementById("count-bags");
-    bagsForm.addEventListener("input", function() {
-        quantityBegs.textContent = bagsForm.value + ` worki`;
+    function updateSelectedCategories() {
+        const selectedCategories = getSelectedCategories();
+        const bagsValue = bagsForm.value;
+
+        const selectedCategoriesText = selectedCategories.length > 0 ? " - " + selectedCategories.join(", ") : "";
+
+        quantityBegs.textContent = bagsValue + " worki" + selectedCategoriesText;
+    }
+
+    function getSelectedCategories() {
+        const checkboxes = document.querySelectorAll('input[name="categories"]:checked');
+        const selectedCategories = [];
+
+        checkboxes.forEach(function (checkbox) {
+            selectedCategories.push(checkbox.parentElement.querySelector('descprition').textContent);
+        });
+        return selectedCategories;
+    }
+
+    // Dodajmy nasłuchiwanie na zmiany w checkboxach kategorii
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("input", function () {
+            updateSelectedCategories();
+        });
     });
+
 
     const streetInput = document.getElementById("street");
     streetInput.addEventListener("input", function() {

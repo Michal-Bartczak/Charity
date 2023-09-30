@@ -14,6 +14,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@Table(name = "donations")
 public class Donation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,4 +52,6 @@ public class Donation {
     @NotNull
     private LocalTime pickUpTime;
     private String pickUpComment;
+   @NotBlank(message = "To pole nie może być puste")
+    private String phoneNumber;
 }

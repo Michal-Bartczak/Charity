@@ -25,7 +25,10 @@ public class BaseUser {
     )
     private Long id;
     @Column(unique = true)
+    @Size(min = 5,max = 20,message = "Nazwa użytkownika musi zawierać od 5 do 20 znaków")
+    private String username;
+    @Column(unique = true)
     private String email;
-    @Size(min=8, max=20, message = "Hasło musi zawierać od 8 do 20 znaków")
+
     private String password;
 }

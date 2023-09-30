@@ -54,7 +54,7 @@ public class HomeController {
         }
 
         if (userService.checkConfirmPassword(registrationForm)) {
-            if (userService.isEmailAlreadyInUse(registrationFormToUserConverter.convert(registrationForm))) {
+            if (!userService.isUsernameAlreadyInUse(registrationFormToUserConverter.convert(registrationForm))) {
                 userService.saveUser(registrationFormToUserConverter.convert(registrationForm));
                 return "registration-confirm";
             } else {
@@ -66,4 +66,5 @@ public class HomeController {
             return "register";
         }
     }
+
 }

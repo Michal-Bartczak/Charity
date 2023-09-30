@@ -10,31 +10,35 @@ import pl.coderslab.charity.entity.Donation;
 import pl.coderslab.charity.service.CategoryService;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
+import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/form")
+@RequestMapping("/user")
 public class DonationController {
     private final CategoryService categoryService;
     private final InstitutionService institutionService;
 
     private final DonationService donationService;
+    private final UserService userService;
 
-    public DonationController(CategoryService categoryService, InstitutionService institutionService, DonationService donationService) {
+    public DonationController(CategoryService categoryService, InstitutionService institutionService, DonationService donationService, UserService userService) {
         this.categoryService = categoryService;
         this.institutionService = institutionService;
         this.donationService = donationService;
+        this.userService = userService;
     }
 
-    @GetMapping("")
+    @GetMapping("/form")
     public String getFormForDonation(Model model){
         model.addAttribute("categoriesThings", categoryService.getAllCategories());
         model.addAttribute("institutions", institutionService.findAllInstitution());
         model.addAttribute("donationForm", new Donation());
+        model.addAttribute("username", userService.getCurrentUsernameForCustomer());
         return "form";
     }
-    @PostMapping("")
+    @PostMapping("/form")
     public String addFormDonation(@Valid Donation donation,
                                   BindingResult bindingResult){
         if (bindingResult.hasErrors()){
@@ -43,6 +47,10 @@ public class DonationController {
         }
         donationService.saveDonation(donation);
         System.out.println(donation);
+        return "redirect:/user/form-confirm";
+    }
+    @GetMapping("/form-confirm")
+    public String getConfirmForm(){
         return "form-confirm";
     }
 }

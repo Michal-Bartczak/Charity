@@ -9,5 +9,5 @@ import javax.persistence.Entity;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Long> {
 
-    Admin findByEmail(String email);
+    Admin findByUsername(String username);
 }

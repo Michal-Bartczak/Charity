@@ -5,6 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import pl.coderslab.charity.entity.Admin;
 import pl.coderslab.charity.entity.BaseUser;
 import pl.coderslab.charity.entity.User;
@@ -14,6 +15,7 @@ import pl.coderslab.charity.repository.UserRepository;
 
 import java.util.Collection;
 import java.util.Collections;
+@Service
 
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
@@ -25,22 +27,22 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        BaseUser user = findUserByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        BaseUser user = findUserByUsername(username);
         if (user == null){
             throw new UsernameNotFoundException("Użytkownik z tym adresem email nie istnieje w bazie");
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user));
     }
 
 
-    public BaseUser findUserByEmail(String email) {
+    public BaseUser findUserByUsername(String username) {
         BaseUser user;
-        user = adminRepository.findByEmail(email);
+        user = adminRepository.findByUsername(username);
         if (user != null){
             return user;
         }
-        user = userRepository.findByEmail(email);
+        user = userRepository.findByUsername(username);
         return user;
     }
 

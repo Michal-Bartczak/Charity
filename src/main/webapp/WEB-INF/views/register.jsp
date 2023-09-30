@@ -6,6 +6,10 @@
     <h2>Załóż konto</h2>
     <form:form modelAttribute="registrationForm" action="/register" method="post">
         <div class="form-group">
+            <form:input path="username" type="text" name="username" placeholder="Username" />
+            <form:errors path="username" class="error"/>
+        </div>
+        <div class="form-group">
             <form:input path="email" type="email" name="email" placeholder="Email" />
             <form:errors path="email" class="error"/>
         </div>
@@ -19,7 +23,7 @@
         </div>
 
         <div class="form-group form-group--buttons">
-            <a href="#" class="btn btn--without-border">Zaloguj się</a>
+            <a href="/login" class="btn btn--without-border">Zaloguj się</a>
             <button class="btn" type="submit">Załóż konto</button>
         </div>
     </form:form>

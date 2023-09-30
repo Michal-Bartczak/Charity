@@ -6,8 +6,6 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,7 +27,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")){
                 return "/admin/homepage";
             } else if (grantedAuthority.getAuthority().equals("ROLE_USER")){
-                return "/user/homepage";
+                return "/user/form";
             }
         }
         return "/login";
