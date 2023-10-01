@@ -23,6 +23,8 @@ public class Donation {
     @Min(1)
     private Integer quantity;
 
+    private String username;
+
     @NotNull
     @Size(min = 1)
     @ManyToMany

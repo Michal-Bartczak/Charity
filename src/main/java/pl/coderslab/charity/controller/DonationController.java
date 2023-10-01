@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.entity.Donation;
@@ -13,6 +14,7 @@ import pl.coderslab.charity.service.InstitutionService;
 import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 @Controller
 @RequestMapping("/user")
@@ -42,15 +44,31 @@ public class DonationController {
     public String addFormDonation(@Valid Donation donation,
                                   BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            System.out.println(donation);
+
             return "form";
         }
+        donationService.addUsernameToDonation(donation);
         donationService.saveDonation(donation);
-        System.out.println(donation);
+
         return "redirect:/user/form-confirm";
     }
     @GetMapping("/form-confirm")
-    public String getConfirmForm(){
+    public String getConfirmForm(Model model) {
+        model.addAttribute(userService.getCurrentUsernameForCustomer());
         return "form-confirm";
+    }
+
+    @GetMapping("/collections")
+    public String getCollections(Model model){
+        model.addAttribute("username",userService.getCurrentUsernameForCustomer());
+        model.addAttribute("donations", donationService.getAllDonationForUsername(userService.getCurrentUsernameForCustomer()));
+        return "ownCollections";
+    }
+    @GetMapping("/details/{id}")
+    public String getDetails(@PathVariable("id") Long donationId,
+                             Model model){
+        model.addAttribute("username",userService.getCurrentUsernameForCustomer());
+        model.addAttribute("donationDetails", donationService.findDonationById(donationId));
+        return "donationDetails";
     }
 }

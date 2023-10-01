@@ -1830,3 +1830,49 @@ footer .bottom-line--icons a img {
  .error {
    color: red;
  }
+ .text-center-header{
+   text-align: center;
+  padding-top: 50px;
+   font-size: 34px;
+ }
+ .table-donations{
+   margin-left: 500px;
+   font-size: 20px;
+   line-height: 25px;
+   margin-right: 50px;
+ }
+ .table-item-donations{
+   width: 20%;
+   font-weight: bold;
+   font-size: 30px;
+   border-bottom: 1px solid black;
+   padding-top: 10px;
+   padding-bottom: 10px;
+ }
+ .table-width{
+   width: 100%;
+   border-bottom: 1px solid black;
+   margin-bottom: 10px;
+ }
+.table-item-donations-2{
+  width: 20%;
+  /*padding-top: 10px;*/
+  /*padding-bottom: 10px;*/
+  padding: 10px
+
+}
+.table-item-donations{
+  width: 40%;
+  font-weight: bold;
+  font-size: 30px;
+  /*padding-top: 10px;*/
+  /*padding-bottom: 10px;*/
+  padding: 10px
+}
+.content-details{
+  margin-left: 500px;
+  font-size: 30px;
+
+}
+
+
