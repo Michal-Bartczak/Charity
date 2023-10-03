@@ -8,6 +8,8 @@ import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.model.RegistrationForm;
 import pl.coderslab.charity.repository.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -46,5 +48,9 @@ public class UserService {
     }
     public Long getCurrentUserId(){
         return userRepository.findByUsername(getCurrentUsernameForUser()).getId();
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 }

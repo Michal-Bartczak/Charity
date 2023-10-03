@@ -18,4 +18,17 @@ public class InstitutionService {
     public List<Institution> findAllInstitution(){
         return institutionRepository.findAll(Pageable.ofSize(4)).toList();
     }
+
+    public List<Institution> findAllInstitutions(){
+        return institutionRepository.findAll();
+    }
+    public Institution getInstitutionById(Long id){
+        return institutionRepository.findById(id).orElse(new Institution());
+    }
+    public void removeInstitutionById(Long id){
+        institutionRepository.delete(getInstitutionById(id));
+    }
+    public void saveEditInstitution(Institution institution){
+        institutionRepository.save(institution);
+    }
 }

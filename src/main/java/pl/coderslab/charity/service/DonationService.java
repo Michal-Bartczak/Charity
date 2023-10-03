@@ -49,4 +49,8 @@ public class DonationService {
     public void deleteDonation(Long id){
         donationRepository.deleteById(id);
     }
+
+    public List<Donation> findAllDonation(){
+        return donationRepository.findAll();
+    }
 }
