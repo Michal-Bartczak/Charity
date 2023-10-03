@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const selectedCategories = [];
 
         checkboxes.forEach(function (checkbox) {
-            selectedCategories.push(checkbox.parentElement.querySelector('descprition').textContent);
+            selectedCategories.push(checkbox.parentElement.querySelector('.description').innerText);
         });
         return selectedCategories;
     }
@@ -159,6 +159,11 @@ document.addEventListener("DOMContentLoaded", function() {
         checkbox.addEventListener("input", function () {
             updateSelectedCategories();
         });
+    });
+
+    const bagsAndCategoriesInput = document.getElementById('count-bags');
+    bagsAndCategoriesInput.addEventListener("input", function (){
+        updateSelectedCategories();
     });
 
 
@@ -208,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function() {
     updateData();
     updateTime();
     updateComment();
+    updateSelectedCategories();
 });
 
 function updateStreet() {

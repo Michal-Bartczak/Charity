@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -23,10 +22,11 @@ public class Donation {
     @Min(1)
     private Integer quantity;
 
-    private String username;
+    @ManyToOne
+    // Błąd w bindingResult przy przesłaniu formularza user jest nullem przez co zawsze formularz jest błędny
+    private User user;
 
-    @NotNull
-    @Size(min = 1)
+    @NotEmpty
     @ManyToMany
     @JoinTable(name = "donation_category",
             joinColumns = @JoinColumn(name = "donation_id"),
@@ -54,6 +54,6 @@ public class Donation {
     @NotNull
     private LocalTime pickUpTime;
     private String pickUpComment;
-   @NotBlank(message = "To pole nie może być puste")
+    @NotBlank(message = "To pole nie może być puste")
     private String phoneNumber;
 }

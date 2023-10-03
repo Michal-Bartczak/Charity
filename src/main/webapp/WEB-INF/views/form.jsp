@@ -55,7 +55,7 @@
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
 
-        <form:form modelAttribute="donationForm" action="/user/form" method="post">
+        <form:form modelAttribute="donation" action="/user/form" method="post">
             <div data-step="1" class="active" id="step1">
                 <h3>Zaznacz co chcesz oddać:</h3>
                 <div class="empty-things"></div>

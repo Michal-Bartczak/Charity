@@ -32,7 +32,7 @@ public class UserService {
         return existingUser != null;
     }
 
-    public String getCurrentUsernameForCustomer() {
+    public String getCurrentUsernameForUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {
@@ -40,5 +40,11 @@ public class UserService {
         } else {
             return principal.toString();
         }
+    }
+    public User getCurrentUserObject(){
+      return userRepository.findByUsername(getCurrentUsernameForUser());
+    }
+    public Long getCurrentUserId(){
+        return userRepository.findByUsername(getCurrentUsernameForUser()).getId();
     }
 }

@@ -1871,8 +1871,19 @@ footer .bottom-line--icons a img {
 }
 .content-details{
   margin-left: 500px;
-  font-size: 30px;
+  font-size: 20px;
 
 }
+.back-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 
+  /* Przesunięcie przycisku na prawo */
+  margin-left: 500px;
 
+}
