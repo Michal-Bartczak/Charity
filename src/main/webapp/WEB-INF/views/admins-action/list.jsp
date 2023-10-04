@@ -134,7 +134,7 @@
                     <div>
                         <a href="/admin/institution/add" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Dodaj instytucje</a>
                         <a href="/user/add" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Dodaj użytkownika</a>
-                        <a href="/admin/admins-add" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Dodaj administratora</a>
+                        <a href="/admin/admin-add" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Dodaj administratora</a>
                     </div>
                 </div>
             </div>
@@ -143,24 +143,24 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     ${message.message}
                 </div>
-                <h2>Lista instytucji</h2>
+                <h2>Lista administratorów</h2>
                 <div class="table-responsive" style="margin-top: 20px;">
                     <table class="table" style="margin-bottom: 0;">
                         <tr>
                             <th>Id</th>
-                            <th>Nazwa</th>
-                            <th>Opis</th>
+                            <th>Nazwa administratora</th>
+                            <th>Email</th>
                             <th>Akcja</th>
                         </tr>
-                        <c:forEach items="${institutions}" var="institution">
+                        <c:forEach items="${adminsList}" var="admin">
                             <tr>
-                                <td>${institution.id}</td>
-                                <td>${institution.name}</td>
-                                <td>${institution.description}</td>
+                                <td>${admin.id}</td>
+                                <td>${admin.username}</td>
+                                <td>${admin.email}</td>
                                 <td>
-                                    <a href='<c:url value="/admin/institution/delete/${institution.id}"/>'>Usuń</a>
-                                    <a href='<c:url value="/admin/institution/edit/${institution.id}"/>'>Edit</a>
-                                    <a href='<c:url value="/admin/institution/show-details/${institution.id}"/>'>Pokaż</a>
+                                    <a href='<c:url value="/admin/admin-delete/${admin.id}"/>'>Usuń</a>
+                                    <a href='<c:url value="/admin/admin-edit/${admin.id}"/>'>Edit</a>
+
                                 </td>
                             </tr>
                         </c:forEach>
@@ -169,21 +169,21 @@
             </div>
 
 
-                    <!-- Page Heading -->
+            <!-- Page Heading -->
 
 
+            <!-- Content Row -->
+            <div class="row">
+                <!-- Content Row -->
+                <div class="row">
                     <!-- Content Row -->
                     <div class="row">
-                        <!-- Content Row -->
-                        <div class="row">
-                            <!-- Content Row -->
-                            <div class="row">
-                                <!-- Approach -->
-                                <div class="card shadow mb-4">
-                                </div>
-                            </div>
+                        <!-- Approach -->
+                        <div class="card shadow mb-4">
                         </div>
                     </div>
+                </div>
+            </div>
         </div>
 
 

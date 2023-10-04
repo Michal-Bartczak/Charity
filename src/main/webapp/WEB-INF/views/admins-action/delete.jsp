@@ -33,7 +33,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/user/list">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -59,9 +59,6 @@
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Lista administratorów</span></a>
         </li>
-
-
-
 
 
 
@@ -125,65 +122,46 @@
                         </div>
                         </li>
 
-                    </div>
+
             </nav>
 
             <div class="container-fluid">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">${adminName}</h1>
-                    <div>
-                        <a href="/admin/institution/add" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Dodaj instytucje</a>
-                        <a href="/user/add" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Dodaj użytkownika</a>
-                        <a href="/admin/admins-add" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Dodaj administratora</a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="container-fluid" style="background-color: white; padding: 20px;">
+
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    ${message.message}
+                    <h1 class="h3 mb-0 text-gray-800">${adminName}</h1>
+                    <a href="/admin/admin-add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-download fa-sm text-white-50"></i> Dodaj administratora</a>
                 </div>
-                <h2>Lista instytucji</h2>
-                <div class="table-responsive" style="margin-top: 20px;">
-                    <table class="table" style="margin-bottom: 0;">
-                        <tr>
-                            <th>Id</th>
-                            <th>Nazwa</th>
-                            <th>Opis</th>
-                            <th>Akcja</th>
-                        </tr>
-                        <c:forEach items="${institutions}" var="institution">
-                            <tr>
-                                <td>${institution.id}</td>
-                                <td>${institution.name}</td>
-                                <td>${institution.description}</td>
-                                <td>
-                                    <a href='<c:url value="/admin/institution/delete/${institution.id}"/>'>Usuń</a>
-                                    <a href='<c:url value="/admin/institution/edit/${institution.id}"/>'>Edit</a>
-                                    <a href='<c:url value="/admin/institution/show-details/${institution.id}"/>'>Pokaż</a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div>
+
             </div>
-
-
-                    <!-- Page Heading -->
-
-
-                    <!-- Content Row -->
-                    <div class="row">
-                        <!-- Content Row -->
-                        <div class="row">
-                            <!-- Content Row -->
-                            <div class="row">
-                                <!-- Approach -->
-                                <div class="card shadow mb-4">
-                                </div>
-                            </div>
+            <div class="container-fluid" style="margin: 10px;">
+                <div class="row justify-content-start">
+                    <div class="col-lg-6">
+                        <div style="background-color: white; padding: 20px;">
+                            <h1>Usuwanie administratora id: ${admin}</h1>
+                            <h2>Wybrany administrator zostanie usunięty !</h2>
+                            <h3>Czy na pewno chcesz usunąć wybranego administratora?</h3>
+                            <div class="button-confirm" style="display: flex"> <form method="post" action="/admin/admin-delete/${admin}">
+                                <input type="submit" name="zgoda" value="TAK" class="btn btn-danger">
+                            </form>
+                                <button class="btn btn-secondary"><a href="/admin/admins-list" style="color: white">NIE</a> </button></div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <!-- Content Row -->
+            <div class="row">
+                <!-- Content Row -->
+                <div class="row">
+                    <!-- Content Row -->
+                    <div class="row">
+                        <!-- Approach -->
+                        <div class="card shadow mb-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 

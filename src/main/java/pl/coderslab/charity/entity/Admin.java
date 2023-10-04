@@ -2,9 +2,8 @@ package pl.coderslab.charity.entity;
 
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @NoArgsConstructor
