@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +22,12 @@
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.css" rel="stylesheet">
+    <style>
+        .error{
+            color: red;
+            font-size: 14px;
+        }
+    </style>
 
 </head>
 
@@ -33,7 +40,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/user/list">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -45,22 +52,20 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/admin/homepage">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Lista dotacji</span></a>
+                <span>Lista instytucji</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/admin/users-list">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Lista użytkowników</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/admin/admins-list">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Lista instytucji</span></a>
+                <span>Lista administratorów</span></a>
         </li>
-
-
 
 
 
@@ -76,10 +81,6 @@
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
 
 
                 <!-- Topbar Navbar -->
@@ -123,49 +124,40 @@
                         </div>
                         </li>
 
-                    </div>
-            </nav>
 
+            </nav>
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">${adminName}</h1>
-                    <a href="/user/add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    <a href="/admin/user-add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i> Dodaj użytkownika</a>
                 </div>
             </div>
-            <div class="container-fluid" style="background-color: white; padding: 20px;">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    ${message.message}
-                </div>
-                <h2>Lista użytkowników</h2>
-                <div class="table-responsive" style="margin-top: 20px;">
-                    <table class="table" style="margin-bottom: 0;">
-                        <tr>
-                            <th>id</th>
-                            <th>Nazwa użytkownika</th>
-                            <th>Email</th>
-                            <th>Akcja</th>
-                        </tr>
-                        <c:forEach items="${users}" var="user">
-                            <tr>
-                                <td>${user.id}</td>
-                                <td>${user.userName}</td>
-                                <td>${user.email}</td>
-                                <td>
-                                    <a href='<c:url value="/user/delete?id=${user.id}"/>'>Usuń</a>
-                                    <a href='<c:url value="/user/edit?id=${user.id}"/>'>Edit</a>
-                                    <a href='<c:url value="/user/show?id=${user.id}"/>'>Pokaż</a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </table>
+
+
+            <div class="container-fluid" style="margin: 10px;">
+                <div class="row justify-content-start">
+                    <div class="col-lg-6">
+                        <div style="background-color: white; padding: 20px;">
+                            <h1>Edytuj użytkownika</h1>
+                            <form:form modelAttribute="user" method="post" action="/admin/user-details/${userId}">
+                                <div class="form-group">
+                                    <label for="username">Nazwa użytkownika</label>
+                                    <form:input type="text" class="form-control" id="username" path="username"/>
+                                    <form:errors path="username" class="error"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <form:input type="email" class="form-control" id="email" path="email"/>
+                                    <form:errors path="email" class="error"/>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Edytuj</button>
+                            </form:form>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-            <!-- Page Heading -->
-
-
             <!-- Content Row -->
             <div class="row">
                 <!-- Content Row -->

@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.entity.Admin;
 import pl.coderslab.charity.entity.Institution;
+import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.service.AdminService;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
@@ -33,22 +34,17 @@ public class AdminController {
     public String getHomepageAdmin(Model model) {
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
         model.addAttribute("institutions", institutionService.findAllInstitutions());
-        return "admin-homepage";
+        return "/admin/admin-homepage";
     }
 
-    @GetMapping("/users-list")
-    public String getUsersList(Model model) {
-        model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
-        model.addAttribute("usersList", userService.getAllUsers());
-        return "users-list-admin";
-    }
+
 
     @GetMapping("/institution/delete/{id}")
     public String getDeleteInstitutionConfirm(@PathVariable("id") Long institutionId,
                                               Model model) {
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
         model.addAttribute("institution", institutionService.getInstitutionById(institutionId));
-        return "confirm-delete-institution";
+        return "/admin/institution-action/confirm-delete-institution";
     }
 
     @PostMapping("/institution/delete/{id}")
@@ -63,7 +59,7 @@ public class AdminController {
                                         Model model) {
         model.addAttribute("institutionDetails", institutionService.getInstitutionById(institutionId));
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
-        return "show-details-institution";
+        return "/admin/institution-action/show-details-institution";
     }
 
     @GetMapping("/institution/edit/{id}")
@@ -72,7 +68,7 @@ public class AdminController {
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
         model.addAttribute("institutionDetails", institutionService.getInstitutionById(institutionId));
         model.addAttribute("institution", new Institution());
-        return "edit-details-institution";
+        return "/admin/institution-action/edit-details-institution";
     }
 
     @PostMapping("/institution/edit/{id}")
@@ -83,7 +79,7 @@ public class AdminController {
                                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
-            return "edit-details-institution";
+            return "/admin/institution-action/edit-details-institution";
         }
         institutionService.saveInstitution(institution);
         return "redirect:/admin/homepage";
@@ -92,7 +88,7 @@ public class AdminController {
     public String getInstitutionFormForAdd(Model model){
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
         model.addAttribute("institution", new Institution());
-        return "add-institution";
+        return "/admin/institution-action/add-institution";
     }
     @PostMapping("/institution/add")
     public String addInstitution(@Valid Institution institution,
@@ -100,7 +96,7 @@ public class AdminController {
                                  Model model){
         if (bindingResult.hasErrors()){
             model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
-            return "add-institution";
+            return "/admin/institution-action/add-institution";
         }
         institutionService.saveInstitution(institution);
         return "redirect:/admin/homepage";
@@ -110,13 +106,13 @@ public class AdminController {
     public String getAllAdminsList(Model model){
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
         model.addAttribute("adminsList", adminService.getAllAdmins());
-        return "/admins-action/list";
+        return "/admin/admins-action/list";
     }
     @GetMapping("/admin-add")
     public String getAdminFormForAdd(Model model){
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
         model.addAttribute("adminForm", new Admin());
-        return "/admins-action/add";
+        return "/admin/admins-action/add";
     }
     @PostMapping("/admin-add")
     public String addAdmin(@ModelAttribute("adminForm") @Valid Admin admin,
@@ -124,7 +120,7 @@ public class AdminController {
                            Model model){
         if (bindingResult.hasErrors()){
             model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
-            return "/admins-action/add";
+            return "/admin/admins-action/add";
         }
         adminService.cryptPasswordAdminAndSave(admin);
         return "redirect:/admin/admins-list";
@@ -135,7 +131,7 @@ public class AdminController {
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
         model.addAttribute("adminEditForm", new Admin());
         model.addAttribute("adminId", adminId);
-        return "/admins-action/edit";
+        return "/admin/admins-action/edit";
     }
     //czy te id są konieczne ?
     @PostMapping("/admin-edit/{id}")
@@ -144,7 +140,7 @@ public class AdminController {
                             @ModelAttribute("adminEditForm") @Valid
                             Admin admin, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "/admins-action/edit";
+            return "/admin/admins-action/edit";
         }
         adminService.saveAdminWithoutPassword(admin);
         return "redirect:/admin/admins-list";
@@ -154,7 +150,7 @@ public class AdminController {
                                         Model model){
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
         model.addAttribute("admin", adminId);
-        return "/admins-action/delete";
+        return "/admin/admins-action/delete";
     }
     @PostMapping("admin-delete/{id}")
     public String deleteAdmin(@PathVariable("id") Long adminId,
@@ -163,8 +159,48 @@ public class AdminController {
             return "redirect:/admin/admins-list";
         }
         model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
-        return "/admins-action/delete-error";
+        return "/admin/admins-action/delete-error";
     }
-
+    @GetMapping("/users-list")
+    public String getUsersList(Model model) {
+        model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
+        model.addAttribute("usersList", userService.getAllUsers());
+        return "/admin/users-action/users-list-admin";
+    }
+    @GetMapping("/user-details/{id}")
+    public String editFormUserDetails(@PathVariable("id") Long userId,
+                                 Model model){
+        model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
+        model.addAttribute("userId", userId);
+        model.addAttribute("user", new User());
+        return "/admin/users-action/edit-details";
+    }
+    @PostMapping("/user-details/{id}")
+    public String editUserDetails(@PathVariable("id") Long userId,
+                                  @ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+                                  Model model){
+        if(bindingResult.hasErrors()){
+            return "/admin/users-action/edit-details";
+        }
+        userService.saveUserWithoutPassword(user);
+        return"redirect:/admin/users-list";
+    }
+    @GetMapping("/user-add")
+    public String getFormUserAdd(Model model){
+        model.addAttribute("adminName", adminService.getCurrentUsernameForAdmin());
+        model.addAttribute("userForm", new User());
+        return "/admin/users-action/add";
+    }
+    @PostMapping("/user-add")
+    public String addUser(@ModelAttribute("userForm") @Valid
+                          User user,
+                          BindingResult bindingResult,
+                          Model model){
+        if (bindingResult.hasErrors()){
+            return"/admin/users-action/add";
+        }
+        userService.saveUser(user);
+        return "redirect:/admin/users-list";
+    }
 
 }
